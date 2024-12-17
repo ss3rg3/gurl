@@ -21,6 +21,7 @@ func ExecuteHttpRequest(httpUrl string) {
 
 	options := []tls_client.HttpClientOption{
 		tls_client.WithTimeoutSeconds(15),
+		tls_client.WithNotFollowRedirects(),
 		tls_client.WithClientProfile(profileAndHeaders.Profile),
 	}
 
@@ -48,7 +49,8 @@ func ExecuteHttpRequest(httpUrl string) {
 
 	// todo return JSON
 	fmt.Println(content)
-	fmt.Println(req.Header)
+	fmt.Println(req.URL)
+	fmt.Println(resp.Location())
 	fmt.Println("Content-Encoding:", resp.Header.Get("Content-Encoding"))
 	fmt.Println(fmt.Sprintf("status code: %d", resp.StatusCode))
 	fmt.Println(profileAndHeaders.Profile.GetClientHelloId())
