@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/ss3rg3/gurl/utils"
+	"github.com/ss3rg3/gurl/core"
 	"os"
 )
 
@@ -24,17 +24,16 @@ func main() {
 
 	flag.Parse()
 	validate(&opts)
-	utils.ExecuteHttpRequest(opts.url)
-	// todo check https://www.whatismybrowser.com/detect/client-hints/
+	core.ExecuteHttpRequest(opts.url)
 }
 
 func validate(opts *Options) {
 	if opts.url == "" {
 		flag.Usage()
-		utils.ExitWithError("Error: URL is required")
+		core.ExitWithError("Error: URL is required")
 	}
 
-	if !utils.IsValidHTTPURL(opts.url) {
-		utils.ExitWithError(fmt.Sprintf("Error: %s is not a valid HTTP/HTTPS URL\n", opts.url))
+	if !core.IsValidHTTPURL(opts.url) {
+		core.ExitWithError(fmt.Sprintf("Error: %s is not a valid HTTP/HTTPS URL\n", opts.url))
 	}
 }

@@ -1,4 +1,4 @@
-package headers
+package core
 
 import (
 	http "github.com/bogdanfinn/fhttp"
@@ -7,17 +7,23 @@ import (
 )
 
 type ProfileAndHeaders struct {
-	Profile       profiles.ClientProfile
-	CreateHeaders func() http.Header
+	Profile profiles.ClientProfile
+	Headers func() http.Header
 }
 
+// profileAndHeadersList is a list of ProfileAndHeaders
+// Get release dates from here: https://chromiumdash.appspot.com/schedule
 var profileAndHeadersList = []ProfileAndHeaders{
-	{Profile: profiles.Chrome_131, CreateHeaders: chrome131},
-	{Profile: profiles.Chrome_124, CreateHeaders: chrome124},
-	{Profile: profiles.Chrome_120, CreateHeaders: chrome120},
+	{Profile: profiles.Chrome_131, Headers: chrome131}, // Released Nov 2024
+	{Profile: profiles.Chrome_124, Headers: chrome124}, // Released Apr 2024
+	{Profile: profiles.Chrome_120, Headers: chrome120}, // Released Nov 2023
 }
 
-func GetRandomProfile() ProfileAndHeaders {
+// -------------------------------------------------------------------------------
+// PROFILES AND HEADERS
+// -------------------------------------------------------------------------------
+
+func GetRandom() ProfileAndHeaders {
 	randomIndex := rand.Intn(len(profileAndHeadersList))
 	return profileAndHeadersList[randomIndex]
 }
@@ -77,7 +83,7 @@ func chrome124() http.Header {
 		"sec-ch-ua-mobile":          {"?0"},
 		"sec-ch-ua-platform":        {"\"Linux\""},
 		"upgrade-insecure-requests": {"1"},
-		"user-agent":                {"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"},
+		"user-agent":                {"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"},
 		"accept":                    {"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"},
 		"sec-fetch-site":            {"cross-site"},
 		"sec-fetch-mode":            {"navigate"},
@@ -119,7 +125,7 @@ func chrome120() http.Header {
 		"sec-ch-ua-mobile":          {"?0"},
 		"sec-ch-ua-platform":        {"\"Linux\""},
 		"upgrade-insecure-requests": {"1"},
-		"user-agent":                {"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"},
+		"user-agent":                {"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"},
 		"accept":                    {"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"},
 		"sec-fetch-site":            {"cross-site"},
 		"sec-fetch-mode":            {"navigate"},
